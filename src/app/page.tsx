@@ -2,7 +2,8 @@
 
 import { useTheme } from "@/contexts/ThemeContext";
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const { theme } = useTheme();
@@ -23,26 +24,34 @@ export default function Home() {
     window.addEventListener("resize", calculateHeaderHeight);
 
     const handleScroll = () => {
-      const videoSection = document.querySelector(".hero-video-section");
-      const flowingTextSection = document.querySelector(".flowing-text-section");
-      
+      const videoSection = document.querySelector(
+        ".hero-video-section"
+      ) as HTMLElement;
+      const flowingTextSection = document.querySelector(
+        ".flowing-text-section"
+      ) as HTMLElement;
+
       if (videoSection && flowingTextSection) {
         const videoHeight = videoSection.offsetHeight;
         const scrolledAmount = window.scrollY;
         const fourFifthsOfVideo = videoHeight * 0.8;
-        
+
         // Get the last content element in the flowing text section
-        const textContainer = flowingTextSection.querySelector(".space-y-40");
+        const textContainer = flowingTextSection.querySelector(
+          ".space-y-40"
+        ) as HTMLElement;
         if (textContainer) {
-          const lastTextElement = textContainer.lastElementChild;
+          const lastTextElement = textContainer.lastElementChild as HTMLElement;
           if (lastTextElement) {
             const lastTextRect = lastTextElement.getBoundingClientRect();
             const lastTextBottom = lastTextRect.bottom;
-            
+
             // Show overlay when:
-            // 1. Scrolled past 4/5 of video 
+            // 1. Scrolled past 4/5 of video
             // 2. AND last text element is still visible in viewport
-            setShowOverlay(scrolledAmount >= fourFifthsOfVideo && lastTextBottom > 0);
+            setShowOverlay(
+              scrolledAmount >= fourFifthsOfVideo && lastTextBottom > 0
+            );
           }
         }
       }
@@ -62,10 +71,10 @@ export default function Home() {
       {/* Hero Section */}
       <section
         className="hero-video-section relative w-full overflow-hidden"
-        style={{ 
+        style={{
           height: `calc(100vh - ${headerHeight}px)`,
-          aspectRatio: '16/9',
-          maxHeight: '56.25vw'
+          aspectRatio: "16/9",
+          maxHeight: "56.25vw",
         }}
       >
         <video
@@ -80,11 +89,13 @@ export default function Home() {
             type="video/mp4"
           />
         </video>
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
           alt="Modern dental clinic"
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          className="object-cover"
           style={{ zIndex: -1 }}
+          unoptimized
         />
         <div className="absolute inset-0 bg-black" style={{ opacity: 0.4 }} />
       </section>
@@ -296,10 +307,13 @@ export default function Home() {
               </div>
             </div>
             <div data-aos="fade-left">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1169&q=80"
                 alt="Hospital interior"
+                width={1169}
+                height={384}
                 className="w-full h-96 object-cover rounded-lg shadow-lg"
+                unoptimized
               />
             </div>
           </div>
@@ -335,10 +349,13 @@ export default function Home() {
                 data-aos="zoom-in"
                 data-aos-delay={index * 200}
               >
-                <img
+                <Image
                   src={`https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80`}
                   alt={`Doctor ${doctor}`}
+                  width={128}
+                  height={128}
                   className="w-32 h-32 object-cover rounded-full mx-auto mb-4"
+                  unoptimized
                 />
                 <h3
                   className="text-xl font-semibold mb-2"
@@ -371,10 +388,13 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div data-aos="fade-right">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1169&q=80"
                 alt="Medical equipment"
+                width={1169}
+                height={384}
                 className="w-full h-96 object-cover rounded-lg shadow-lg"
+                unoptimized
               />
             </div>
             <div data-aos="fade-left">
